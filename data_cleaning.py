@@ -1,5 +1,4 @@
 
-import numpy as np
 import pandas as pd
 
 df = pd.read_csv('jobs.csv')
@@ -31,6 +30,7 @@ df['Salary Estimate'] = df['Salary Estimate'].apply(clean_salary)
 
 df['Salary Estimate'] = df['Salary Estimate'].astype(float)
 
+
 avg_sal = df['Salary Estimate'].mean()
 print(avg_sal)
 
@@ -40,18 +40,121 @@ df['Salary Estimate'] = df['Salary Estimate'].apply(lambda x:avg_sal if pd.isnul
 # Cleaning Location column, adding a new region column
 df['Region'] = df['Location'].apply(lambda x: x.split(', ')[1] if ', ' in x else x)
 
-df.Region.value_counts()
+# Removing the region from the location entries
+#df['Location'] = df['Location'].apply(lambda x: x.split(', ')[0] if ', ' in x else x)
 
 # Making 'company age' column with the entries in the founded column
 ## Some entries in founded are '--'. Converting them to null values...
-df['Founded'] = df['Founded'].apply(lambda x:np.nan if x == '--' else x)
-df.Founded.value_counts()
+df['Founded'] = df['Founded'].apply(lambda x:None if x == '--' else x)
+# df.Founded.value_counts()
+
 df['Founded'] = df['Founded'].astype(float)
 df['Company Age'] = df['Founded'].apply(lambda x:2024-x if pd.notnull(x) else x)
 
+## Some entries in sector are '--'. Converting them to null values...
+df['Sector'] = df['Sector'].apply(lambda x:None if x == '--' else x)
+df.Sector.value_counts()
+
+
+## Some entries in industry are '--'. Converting them to null values...
+df['Industry'] = df['Industry'].apply(lambda x:None if x == '--' else x)
+df.Industry.value_counts()
+
+# Simplifying Job Titles to make it easier to analyse
+def title_simp(title):
+    if 'data scientist' in title.lower():
+        return 'Data Scientist'
+    elif 'data engineer' in title.lower():
+        return 'Data Engineer'
+    elif 'research' in title.lower():
+        return 'Research'
+    elif 'analyst' in title.lower():
+        return 'Analyst'
+    elif 'machine learning' in title.lower():
+        return 'MLE'
+    elif 'artificial intelligence' in title.lower():
+        return 'AI'
+    elif 'manager' in title.lower():
+        return 'Manager'
+    elif 'director' in title.lower():
+        return 'Director'
+    else:
+        return None
+
+# function to define seniority level of a job position
+def seniority(title):
+    if ' sr. ' in title.lower() or 'senior' in title.lower() or ' sr ' in title.lower() or 'lead' in title.lower() or 'principal' in title.lower():
+        return 'senior'
+    elif 'junior' in title.lower() or ' jr. ' in title.lower() or ' jr ' in title.lower() or 'entry level' in title.lower() or 'entry-level' in title.lower():
+        return 'junior'
+    else:
+        return None
+
+df['Title_Simp'] = df['Job Title'].apply(title_simp)
+# df.Title_Simp.value_counts()
+df['Seniority'] = df['Job Title'].apply(seniority)
+# df.Seniority.value_counts()
+
+
+# There are 7 levels for size. Putting this in a new column
+def size_simp(size):
+    if pd.isna(size):
+        return None
+    elif '10000+' in size:
+        return 7
+    elif '5001' in size:
+        return 6
+    elif '1001' in size:
+        return 5
+    elif '501' in size:
+        return 4
+    elif '201' in size:
+        return 3
+    elif '51' in size:
+        return 2
+    elif '50' in size:
+        return 1
+    else:
+        return None
+    
+
+df['size_simp'] = df.Size.apply(size_simp)
+
+
+# Doing the same for revenue. There are 9 levels for revenue
+def rev_simp(revenue):
+    if pd.isna(revenue):
+        return None
+    elif '10+ billion' in revenue:
+        return 9
+    elif '10 billion' in revenue:
+        return 8
+    elif '5 billion' in revenue:
+        return 7
+    elif '1 billion' in revenue:
+        return 6
+    elif '100 to $500' in revenue:
+        return 5
+    elif '25 to $50' in revenue:
+        return 4
+    elif '5 to $25' in revenue:
+        return 3
+    elif '2 to $5' in revenue or ('1 to $5') in revenue:
+        return 2
+    elif 'Less' in revenue:
+        return 1
+    else:
+        return None
+
+df['revenue_simp'] = df.Revenue.apply(rev_simp)
+
 
 # Cleaning Skills column
+## Removing the string 'Skills: ' from the skills column 
 df['Skills'] = df['Skills'].apply(lambda x:x[8:] if pd.notnull(x) else x)
+
+# Adding a new column for remote jobs
+df['Remote_yn'] = df.apply(lambda row:1 if 'remote' in str(row['Job Title']).lower() or 'remote' in str(row['Location']).lower() else 0, axis = 1)
 
 # Making a new column for each important skill
 ## Skills - Python, R, SAS, SQL, Altair, Talend, Alteryx, Pytorch, Tensorflow, scikit-learn, spark, hadoop, mongodb, mysql, 'Deep Learning', 'Tableau', PowerBI, Excel, AWS, Azure, Google Cloud, 
@@ -80,7 +183,7 @@ df['scikit-learn_yn'] = df.apply(lambda row:1 if 'scikit-learn' in str(row['Job 
 
 df['spark_yn'] = df.apply(lambda row:1 if 'spark' in str(row['Job Description']).lower() or 'spark' in str(row['Skills']).lower() else 0, axis = 1)
 
-df['mongodb_yn'] = df.apply(lambda row:1 if 'mongodb' in str(row['Job Description']).lower() or 'mongodb' in str(row['Skills']).lower() else 0, axis = 1)
+df['mongodb_yn'] = df.apply(lambda row:1 if 'mongodb' in str(row['Job Description']).lower() or 'mongo db' in str(row['Job Description']).lower() or 'mongo-db' in str(row['Job Description']).lower() or 'mongodb' in str(row['Skills']).lower() or 'mongo db' in str(row['Skills']).lower() or 'mongo-db' in str(row['Skills']).lower() else 0, axis = 1)
 
 df['mysql_yn'] = df.apply(lambda row:1 if 'mysql' in str(row['Job Description']).lower() or 'mysql' in str(row['Skills']).lower() else 0, axis = 1)
 
@@ -88,7 +191,7 @@ df['deeplearning_yn'] = df.apply(lambda row:1 if 'deep learning' in str(row['Job
 
 df['tableau_yn'] = df.apply(lambda row:1 if 'tableau' in str(row['Job Description']).lower() or 'tableau' in str(row['Skills']).lower() else 0, axis = 1)
 
-df['tableau_yn'] = df.apply(lambda row:1 if 'tableau' in str(row['Job Description']).lower() or 'tableau' in str(row['Skills']).lower() else 0, axis = 1)
+df['powerbi_yn'] = df.apply(lambda row:1 if 'power bi' in str(row['Job Description']).lower() or 'power-bi' in str(row['Job Description']).lower() or 'power bi' in str(row['Skills']).lower() or 'power-bi' in str(row['Skills']).lower() else 0, axis = 1)
 
 df['excel_yn'] = df.apply(lambda row:1 if 'microsoft excel' in str(row['Job Description']).lower() or 'excel' in str(row['Skills']).lower() else 0, axis = 1)
 
@@ -100,47 +203,8 @@ df['googlecloud_yn'] = df.apply(lambda row:1 if 'google cloud' in str(row['Job D
 
 df.r_yn.value_counts()
 
-# Adding a new column for remote jobs
-df['Remote'] = df.apply(lambda row:1 if 'remote' in str(row['Job Title']).lower() or 'remote' in str(row['Location']).lower() else 0, axis = 1)
 
-# Simplifying Job Titles to make it easier to analyse
-
-def title_simp(title):
-    if 'data scientist' in title.lower():
-        return 'Data Scientist'
-    elif 'data engineer' in title.lower():
-        return 'Data Engineer'
-    elif 'research' in title.lower():
-        return 'Research'
-    elif 'analyst' in title.lower():
-        return 'Analyst'
-    elif 'machine learning' in title.lower():
-        return 'MLE'
-    elif 'artificial intelligence' in title.lower():
-        return 'AI'
-    elif 'manager' in title.lower():
-        return 'Manager'
-    elif 'director' in title.lower():
-        return 'Director'
-    else:
-        return 'na'
-
-# function to define seniority level of a job position
-def seniority(title):
-    if ' sr. ' in title.lower() or 'senior' in title.lower() or ' sr ' in title.lower() or 'lead' in title.lower() or 'principal' in title.lower():
-        return 'senior'
-    elif 'junior' in title.lower() or ' jr. ' in title.lower() or ' jr ' in title.lower() or 'entry level' in title.lower() or 'entry-level' in title.lower():
-        return 'junior'
-    else:
-        return 'na'
-
-df['Title_Simp'] = df['Job Title'].apply(title_simp)
-# df.Title_Simp.value_counts()
-df['Seniority'] = df['Job Title'].apply(seniority)
-# df.Seniority.value_counts()
-
-## Dealing with dupes
-
+## Removing duplicate values
 df_clean = df.drop_duplicates(subset = ['Job Title', 'Company Name', 'Salary Estimate', 'Location', 'Job Description'])
 
 
