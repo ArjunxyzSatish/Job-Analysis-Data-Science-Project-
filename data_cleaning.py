@@ -36,7 +36,7 @@ print(avg_sal)
 
 df['Salary Estimate'] = df['Salary Estimate'].apply(lambda x:avg_sal if pd.isnull(x) else x)
 
-
+# Dealing with null values
 # Cleaning Location column, adding a new region column
 df['Region'] = df['Location'].apply(lambda x: x.split(', ')[1] if ', ' in x else x)
 
@@ -46,19 +46,20 @@ df['Region'] = df['Location'].apply(lambda x: x.split(', ')[1] if ', ' in x else
 # Making 'company age' column with the entries in the founded column
 ## Some entries in founded are '--'. Converting them to null values...
 df['Founded'] = df['Founded'].apply(lambda x:None if x == '--' else x)
+
 # df.Founded.value_counts()
 
 df['Founded'] = df['Founded'].astype(float)
+
 df['Company Age'] = df['Founded'].apply(lambda x:2024-x if pd.notnull(x) else x)
 
 ## Some entries in sector are '--'. Converting them to null values...
 df['Sector'] = df['Sector'].apply(lambda x:None if x == '--' else x)
-df.Sector.value_counts()
-
+# df.Sector.value_counts()
 
 ## Some entries in industry are '--'. Converting them to null values...
 df['Industry'] = df['Industry'].apply(lambda x:None if x == '--' else x)
-df.Industry.value_counts()
+# df.Industry.value_counts()
 
 # Simplifying Job Titles to make it easier to analyse
 def title_simp(title):
@@ -92,6 +93,8 @@ def seniority(title):
 
 df['Title_Simp'] = df['Job Title'].apply(title_simp)
 # df.Title_Simp.value_counts()
+
+
 df['Seniority'] = df['Job Title'].apply(seniority)
 # df.Seniority.value_counts()
 
@@ -201,12 +204,60 @@ df['azure_yn'] = df.apply(lambda row:1 if 'azure' in str(row['Job Description'])
 
 df['googlecloud_yn'] = df.apply(lambda row:1 if 'google cloud' in str(row['Job Description']).lower() or 'google cloud' in str(row['Skills']).lower() else 0, axis = 1)
 
-df.r_yn.value_counts()
+# df.r_yn.value_counts()
 
 
 ## Removing duplicate values
 df_clean = df.drop_duplicates(subset = ['Job Title', 'Company Name', 'Salary Estimate', 'Location', 'Job Description'])
 
+## Dealing with null values
+
+df_clean.columns
+
+df_clean['Company Age'].isna().value_counts()
+df_clean.size_simp.isna().value_counts()
+
+# replacing founded null entries with mode value 
+df_clean.Founded.fillna(df.Founded.mode()[0], inplace = True)
+
+# replacing industry null entries with mode value 
+df_clean.Industry.fillna(df.Industry.mode()[0], inplace = True)
+
+# replacing sector null entries with mode value 
+df_clean.Sector.fillna(df.Sector.mode()[0], inplace = True)
+
+# replacing revenue null entries with mode value 
+df_clean.Revenue.fillna(df.Revenue.mode()[0], inplace = True)
+
+# replacing size null entries with mode value 
+df_clean.Size.fillna(df.Size.mode()[0], inplace = True)
+
+# replacing size null entries with mode value 
+df_clean['Ownership Type'].fillna(df['Ownership Type'].mode()[0], inplace = True)
+
+# replacing company age null entries with mode value 
+df_clean['Company Age'].fillna(df['Company Age'].mode()[0], inplace = True)
+
+# replacing title simp null entries with mode value 
+df_clean.Title_Simp.fillna(df.Title_Simp.mode()[0], inplace = True)
+
+# replacing seniority null entries with mode value 
+df_clean.Seniority.fillna(df.Seniority.mode()[0], inplace = True)
+
+# replacing revenue_simp null entries with mean value 
+df_clean.revenue_simp.fillna(df.revenue_simp.mean(), inplace = True)
+
+# replacing size simp null entries with mode value 
+df_clean.size_simp.fillna(df.size_simp.mean(), inplace = True)
 
 # out to new csv file
 df_clean.to_csv('jobs_clean.csv', index = False)
+
+
+# # loop that tells you how many null values are there in each col
+#
+# for col in df_clean.columns:
+#     try: 
+#         print(f'{col}: {df_clean[col].isna().value_counts().iloc[1]}')
+#     except:
+#         None
