@@ -20,6 +20,7 @@ df['Rating'] = df['Rating'].astype(float)
 avg_rating = df['Rating'].mean()
 print(avg_rating)
 
+# Imputing null values
 df['Rating'] = df['Rating'].apply(lambda x:avg_rating if pd.isnull(x) else x)
 
 ## Doing the same thing for salary estimate. Some salaries are listed as 'FCFA 111K' and most of them are listed as £111K
@@ -34,9 +35,9 @@ df['Salary Estimate'] = df['Salary Estimate'].astype(float)
 avg_sal = df['Salary Estimate'].mean()
 print(avg_sal)
 
+# Imputing null values
 df['Salary Estimate'] = df['Salary Estimate'].apply(lambda x:avg_sal if pd.isnull(x) else x)
 
-# Dealing with null values
 # Cleaning Location column, adding a new region column
 df['Region'] = df['Location'].apply(lambda x: x.split(', ')[1] if ', ' in x else x)
 
@@ -212,52 +213,44 @@ df_clean = df.drop_duplicates(subset = ['Job Title', 'Company Name', 'Salary Est
 
 ## Dealing with null values
 
-df_clean.columns
-
-df_clean['Company Age'].isna().value_counts()
-df_clean.size_simp.isna().value_counts()
-
-# replacing founded null entries with mode value 
-df_clean.Founded.fillna(df.Founded.mode()[0], inplace = True)
-
-# replacing industry null entries with mode value 
-df_clean.Industry.fillna(df.Industry.mode()[0], inplace = True)
-
-# replacing sector null entries with mode value 
-df_clean.Sector.fillna(df.Sector.mode()[0], inplace = True)
-
-# replacing revenue null entries with mode value 
-df_clean.Revenue.fillna(df.Revenue.mode()[0], inplace = True)
-
-# replacing size null entries with mode value 
-df_clean.Size.fillna(df.Size.mode()[0], inplace = True)
-
-# replacing size null entries with mode value 
-df_clean['Ownership Type'].fillna(df['Ownership Type'].mode()[0], inplace = True)
-
-# replacing company age null entries with mode value 
-df_clean['Company Age'].fillna(df['Company Age'].mode()[0], inplace = True)
-
-# replacing title simp null entries with mode value 
-df_clean.Title_Simp.fillna(df.Title_Simp.mode()[0], inplace = True)
-
-# replacing seniority null entries with mode value 
-df_clean.Seniority.fillna(df.Seniority.mode()[0], inplace = True)
-
-# replacing revenue_simp null entries with mean value 
-df_clean.revenue_simp.fillna(df.revenue_simp.mean(), inplace = True)
-
-# replacing size simp null entries with mode value 
-df_clean.size_simp.fillna(df.size_simp.mean(), inplace = True)
+# df_clean.columns
+#
+# df_clean['Company Age'].isna().value_counts()
+# df_clean.size_simp.isna().value_counts()
+#
+# # replacing founded null entries with mode value 
+# df_clean.Founded.fillna(df.Founded.mode()[0], inplace = True)
+#
+# # replacing industry null entries with mode value 
+# df_clean.Industry.fillna(df.Industry.mode()[0], inplace = True)
+#
+# # replacing sector null entries with mode value 
+# df_clean.Sector.fillna(df.Sector.mode()[0], inplace = True)
+#
+# # replacing revenue null entries with mode value 
+# df_clean.Revenue.fillna(df.Revenue.mode()[0], inplace = True)
+#
+# # replacing size null entries with mode value 
+# df_clean.Size.fillna(df.Size.mode()[0], inplace = True)
+#
+# # replacing size null entries with mode value 
+# df_clean['Ownership Type'].fillna(df['Ownership Type'].mode()[0], inplace = True)
+#
+# # replacing company age null entries with mode value 
+# df_clean['Company Age'].fillna(df['Company Age'].mode()[0], inplace = True)
+#
+# # replacing title simp null entries with mode value 
+# df_clean.Title_Simp.fillna(df.Title_Simp.mode()[0], inplace = True)
+#
+# # replacing seniority null entries with mode value 
+# df_clean.Seniority.fillna(df.Seniority.mode()[0], inplace = True)
+#
+# # replacing revenue_simp null entries with mean value 
+# df_clean.revenue_simp.fillna(df.revenue_simp.mean(), inplace = True)
+#
+# # replacing size simp null entries with mode value 
+# df_clean.size_simp.fillna(df.size_simp.mean(), inplace = True)
 
 # out to new csv file
 df_clean.to_csv('jobs_clean.csv', index = False)
 
-
-# # loop that tells you how many null values are there in each col
-#
-# for col in df_clean.columns:
-#     try: 
-#         print(f'{col}: {df_clean[col].isna().value_counts().iloc[1]}')
-#     except:
-#         None
