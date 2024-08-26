@@ -45,19 +45,19 @@ size = st.selectbox('Company Size', ['10000+ Employees', '1001 to 5000 Employees
 
 size_simp = size_simp(size)
 
-X = {'Title_Simp': [title_simp],
+if st.button('Predict Salary'):
+
+    X = {'Title_Simp': [title_simp],
          'Sector': [sector],
          'Prime_Location': [Prime_Location],
          'revenue_simp': [float(revenue_simp)],
          'size_simp': [float(size_simp)]
          }
-X_df = pd.DataFrame(X)
+    X_df = pd.DataFrame(X)
 
-def on_predict_click():
     salary_prediction, ci_lower, ci_upper = predict_salary(model, X_df)
-    st.write(f'Predicted Salary: ${salary_prediction:.2f}')
-    st.write(f'70% Confidence Interval: ${ci_lower} - ${ci_upper}')
 
-st.button('Predict Salary', on_click = on_predict_click)
-
+    st.write(f"**Predicted Salary**: £{salary_prediction:.2f}")
+    text = 'But this value is most likely not accurate. But, we can say with 70% confidence that the correct salary lies in the range: '
+    st.write(f'{text} £{ci_lower} - £{ci_upper}')
 

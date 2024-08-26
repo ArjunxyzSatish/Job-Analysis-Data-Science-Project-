@@ -30,7 +30,7 @@ def categorise_loc(location):
        Checks if the location is one of the prime sectors
     """
     if isinstance(location, str):  # Check if the value is a string
-        keywords = ['abingdon', 'belfast', 'bournemouth', 'london', 'sheffield']
+        keywords = ['Abingdon', 'Belfast', 'Bournemouth', 'London', 'Sheffield']
         return any(keyword in location for keyword in keywords)
     return False  # Return False for non-string values
 
@@ -84,30 +84,30 @@ model = sm.OLS(y_train, X_trainsm).fit()
 with open('salary_model.pkl', 'wb') as f:
     pickle.dump(model, f)
 
-# print(model.summary())
+print(model.summary())
 
 # predicting on test set 
-# y_pred = model.predict(X_testsm)
-#
-# # metrics
-# r2_test = r2_score(y_test, y_pred)
-# mse_test = mean_squared_error(y_test, y_pred)
-# rmse_test = mse_test ** 0.5
-#
-# print(f'R2: {model.rsquared.round(2)}')
-# print(f'R2_adj: {model.rsquared_adj.round(2)}')
-# print(f'R2 (Test): {r2_test}')
-# print(f'MSE (Test): {mse_test}')
-# print(f'RMSE (Test): {rmse_test}')
-#
-# y_pred_original = np.exp(y_pred)
-# y_test_original = np.exp(y_test)
-#
-# # Calculate the mean absolute error in the original scale
-# mean_absolute_error_original = np.mean(np.abs(y_pred_original - y_test_original))
-# print(f'off by: {mean_absolute_error_original}')
-#
-#
+y_pred = model.predict(X_testsm)
+
+# metrics
+r2_test = r2_score(y_test, y_pred)
+mse_test = mean_squared_error(y_test, y_pred)
+rmse_test = mse_test ** 0.5
+
+print(f'R2: {model.rsquared.round(2)}')
+print(f'R2_adj: {model.rsquared_adj.round(2)}')
+print(f'R2 (Test): {r2_test}')
+print(f'MSE (Test): {mse_test}')
+print(f'RMSE (Test): {rmse_test}')
+
+y_pred_original = np.exp(y_pred)
+y_test_original = np.exp(y_test)
+
+# Calculate the mean absolute error in the original scale
+mean_absolute_error_original = np.mean(np.abs(y_pred_original - y_test_original))
+print(f'off by: {mean_absolute_error_original}')
+
+
 X_new = {'Title_Simp': ['Analyst'],
          'Sector': ['Information Technology'],
          'Prime_Location': [1.0],
@@ -139,16 +139,13 @@ def predict_salary(model, X):
        'size_simp_2.0', 'size_simp_3.0', 'size_simp_4.0', 'size_simp_5.0',
        'size_simp_6.0', 'size_simp_7.0']
 
-    X_new_dum = pd.get_dummies(X, columns = ['Title_Simp', 'Sector','Prime_Location', 'revenue_simp', 'size_simp']).astype('float')
+    X_new_dum = pd.get_dummies(X, columns = ['Title_Simp', 'Sector', 'revenue_simp', 'size_simp']).astype('float')
     
     X_new_dum = X_new_dum.reindex(columns = columns, fill_value=0.0)
 
     X_new_sm = sm.add_constant(X_new_dum, has_constant='add')
-    
-    print('ok')
 
     prediction = model.get_prediction(X_new_sm)
-    print('bok')
     pred_summary = prediction.summary_frame(alpha = 0.30)
 
     # Extract the lower and upper bounds of the 70% confidence interval
