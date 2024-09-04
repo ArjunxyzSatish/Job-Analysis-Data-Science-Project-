@@ -56,17 +56,18 @@ The detailed EDA of this project can be found here.
 - The companies offering jobs were mostly privately owned with a huge number of employees, with a revenue of more than 1 billion USD.
 
 - By far the most in demand job skills were Python and SQL. Power BI was more popular than Tableau and Pytorch more than Tensorflow, but not by much. 
-![Job skills](./images/skills.png)
+<img src="./images/skills.png" alt="Job skills" style="zoom:80%;" />
 
 - Machine Learning Engineers got paid the most, followed by Data Engineers and then Data Scientists. Data Analysts were paid the least.
 
 - The IT and Finance sectors paid the highest. Interestingly, the Pharma sector comes third in the list even though there are very few job roles offered in this sector.
-![sector salaries](./images/sec_sal.png)
+  <img src="./images/sec_sal.png" alt="sector salaries" style="zoom: 67%;" />
 
-- Here are the counts of job roles these industries are looking for:
-![fin job roles](./images/fin_role.png)
-![it job roles](./images/it_role.png)
-There is a higher demand for Data Analysts in the Finance sector and a bigger demand for Data Scientists in the IT sector. 
+  
+
+- Here are the counts of job roles these industries are looking for, there is a higher demand for Data Analysts in the Finance sector and a bigger demand for Data Scientists in the IT sector.
+<img src="./images/fin_role.png" alt="fin job roles" style="zoom:80%;" />
+<img src="./images/it_role.png" alt="it job roles" style="zoom:80%;" />
 
 
 # Modelling
@@ -84,5 +85,4 @@ I wanted to make a model that could predict the salary of a job listing based on
 - The model has an R2 value of 43% and an adjusted R2 of 36%. These values are not very high, meaning a lot of the variation in the data is unexplained by this model. The mean absolute error was calculated to be 7701. So the predictions were off by around 7700 GBP. These were the best results I was able achieve given the dataset. More data could yield better results.
 
 Even though the model can't predict accurately, the salary, I decided to go ahead and make the app anyway and also present the salary as a range.
-
 
