@@ -37,6 +37,9 @@ The detailed EDA of this project can be found here.
 
 - This section will go through some of the major findings from the EDA. The full report can be found here.
 
+- A histogram of job salaries shows us that most of the salaries were around 50,000 GBP.
+![histogram of salaries](./images/sal_hist.png)
+
 
 # Modelling
 
