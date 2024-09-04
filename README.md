@@ -40,6 +40,34 @@ The detailed EDA of this project can be found here.
 - A histogram of job salaries shows us that most of the salaries were around 50,000 GBP.
 ![histogram of salaries](./images/sal_hist.png)
 
+- Most of the companies were 50 years old or younger and were mostly rated 3.5 to 4 stars.
+
+- Most of the job positions were for senior roles and only very few were junior positions. This suggests that employers value job experience in the field.
+![senior v junior roles](./images/sen_jun.png)
+
+- Most of the job postings were for Analyst positions, followed by Data Engineer roles and then Data Scientist roles. And most of them were not remote positions.
+![Position Counts](./images/job_roles.png)
+
+- Almost all of the jobs were located in London and they were equally scattered among the other places. 
+
+- Most of the jobs were in the IT sector. 
+![Job Sectors](./images/job_sec.png)
+
+- The companies offering jobs were mostly privately owned with a huge number of employees, with a revenue of more than 1 billion USD.
+
+- By far the most in demand job skills were Python and SQL. Power BI was more popular than Tableau and Pytorch more than Tensorflow, but not by much. 
+![Job skills](./images/skills.png)
+
+- Machine Learning Engineers got paid the most, followed by Data Engineers and then Data Scientists. Data Analysts were paid the least.
+
+- The IT and Finance sectors paid the highest. Interestingly, the Pharma sector comes third in the list even though there are very few job roles offered in this sector.
+![sector salaries](./images/sec_sal.png)
+
+- Here are the counts of job roles these industries are looking for:
+![fin job roles](./images/fin_role.png)
+![it job roles](./images/it_role.png)
+There is a higher demand for Data Analysts in the Finance sector and a bigger demand for Data Scientists in the IT sector. 
+
 
 # Modelling
 
