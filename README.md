@@ -4,13 +4,37 @@ This project aims to analyse the UK Data Science Job market using data from Glas
 
 The data consists of data analyst, data scientist and data engineer roles in the UK from Glassdoor. 
 
-The detailed EDA of this project can be found here.
+## Skills Demonstrated
+### [Data Preprocessing and Cleaning](#data-cleaning)
+- Handling missing data and outliers
+- Feature engineering
+- Normalising data
+
+### [Exploratory Data Analysis (EDA)](#eda)
+- Visualising data
+- Identifying trends and patterns in data
+
+### [Machine Learning](#modeling)
+- Building and training linear regression models
+- Interpretting model outputs
+
+### Python Programming
+- Writing clean and efficient Python code
+- Using libraries such as numpy, pandas, sklearn, statsmodels
+
+### Deployment
+- Deploying the model as a webapp using streamlit
+
+### Version Control
+- Using Git for version control and project management
+- Writing a comprehensive README
+
 
 # Table of Contents
 
 - [Data Cleaning](#data-cleaning)
 - [Exploratory Data Analysis](#eda)
-- [Modelling](#modelling)
+- [Modeling](#modeling)
 
 # Data Cleaning
 - The Ratings column had ratings in the format '[3.4]'. I cleaned this up and converted the column to float. The column had around 240 null values. I decided to leave them as they were and not impute them. 
@@ -44,7 +68,6 @@ The detailed EDA of this project can be found here.
 
 - Most of the job positions were for senior roles and only very few were junior positions. This suggests that employers value job experience in the field.
 ![senior v junior roles](./images/sen_jun.png)
-
 - Most of the job postings were for Analyst positions, followed by Data Engineer roles and then Data Scientist roles. And most of them were not remote positions.
 ![Position Counts](./images/job_roles.png)
 
@@ -61,16 +84,18 @@ The detailed EDA of this project can be found here.
 - Machine Learning Engineers got paid the most, followed by Data Engineers and then Data Scientists. Data Analysts were paid the least.
 
 - The IT and Finance sectors paid the highest. Interestingly, the Pharma sector comes third in the list even though there are very few job roles offered in this sector.
-  <img src="./images/sec_sal.png" alt="sector salaries" style="zoom: 67%;" />
-
-  
+<img src="./images/sec_sal.png" alt="sector salaries" style="zoom: 67%;" />
 
 - Here are the counts of job roles these industries are looking for, there is a higher demand for Data Analysts in the Finance sector and a bigger demand for Data Scientists in the IT sector.
 <img src="./images/fin_role.png" alt="fin job roles" style="zoom:80%;" />
 <img src="./images/it_role.png" alt="it job roles" style="zoom:80%;" />
 
+- There was not much of a difference in salaries offered by remote and non-remote jobs.
 
-# Modelling
+- London had the highest paying jobs on average and there wasn't much of a difference in average salaries of jobs in the other regions except for the fact that it was lower than in London. Cambridge, Liverpool and Birmingham, Edinburgh, Manchester and Belfast were next in the list. This plot shows us the distribution of salary and also gives an idea of the number of job postings available in London compared to other locations.
+![Loc Sal Count](./images/loc_sal.png)
+
+# Modeling
 
 I wanted to make a model that could predict the salary of a job listing based on other predictors from the listing. 
 
