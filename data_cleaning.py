@@ -15,13 +15,12 @@ df.info()
 
 # Rating is in the format - '[3.2]'. Removing the first 2 and the last 2 characters of the entries in the rating column so that we can convert it to float type and then calculate the average.
 df['Rating'] = df['Rating'].apply(lambda x:x[2:-2] if pd.notnull(x) else x)
-
 df['Rating'] = df['Rating'].astype(float)
 avg_rating = df['Rating'].mean()
 print(avg_rating)
 
 # Imputing null values
-df['Rating'] = df['Rating'].apply(lambda x:avg_rating if pd.isnull(x) else x)
+#df['Rating'] = df['Rating'].apply(lambda x:avg_rating if pd.isnull(x) else x)
 
 ## Doing the same thing for salary estimate. Some salaries are listed as 'FCFA 111K' and most of them are listed as £111K
 clean_salary = lambda x:(str(x)[1:-1] + '000' if str(x).startswith('£') else 
@@ -36,7 +35,7 @@ avg_sal = df['Salary Estimate'].mean()
 print(avg_sal)
 
 # Imputing null values
-df['Salary Estimate'] = df['Salary Estimate'].apply(lambda x:avg_sal if pd.isnull(x) else x)
+#df['Salary Estimate'] = df['Salary Estimate'].apply(lambda x:avg_sal if pd.isnull(x) else x)
 
 # Cleaning Location column, adding a new region column
 df['Region'] = df['Location'].apply(lambda x: x.split(', ')[1] if ', ' in x else x)
