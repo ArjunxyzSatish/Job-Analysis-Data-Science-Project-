@@ -67,38 +67,39 @@ I have built a dashboard for this dataset, using Tableau, which can be found [he
 - This section will go through some of the major findings from the EDA. The full report can be found here.
 
 - A histogram of job salaries shows us that most of the salaries were around 50,000 GBP.
-![histogram of salaries](./images/sal_hist.png)
+<img src="./images/sal_hist.png" alt="Histogram of Salaries" width="400" />
 
 - Most of the companies were 50 years old or younger and were mostly rated 3.5 to 4 stars.
 
 - Most of the job positions were for senior roles and only very few were junior positions. This suggests that employers value job experience in the field.
-![senior v junior roles](./images/sen_jun.png)
+<img src="./images/sen_jun.png" alt="Sr vs Jr" width="400" />
+
 - Most of the job postings were for Analyst positions, followed by Data Engineer roles and then Data Scientist roles. And most of them were not remote positions.
-![Position Counts](./images/job_roles.png)
+<img src="./images/job_roles.png" alt="Position Counts" width="400" />
 
 - Almost all of the jobs were located in London and they were equally scattered among the other places. 
 
 - Most of the jobs were in the IT sector. 
-![Job Sectors](./images/job_sec.png)
+<img src="./images/job_sec.png" alt="Job sector" width="400" />
 
 - The companies offering jobs were mostly privately owned with a huge number of employees, with a revenue of more than 1 billion USD.
 
 - By far the most in demand job skills were Python and SQL. Power BI was more popular than Tableau and Pytorch more than Tensorflow, but not by much. 
-<img src="./images/skills.png" alt="Job skills" style="zoom:80%;" />
+<img src="./images/skills.png" alt="Job skills" width="600" />
 
 - Machine Learning Engineers got paid the most, followed by Data Engineers and then Data Scientists. Data Analysts were paid the least.
 
 - The IT and Finance sectors paid the highest. Interestingly, the Pharma sector comes third in the list even though there are very few job roles offered in this sector.
-<img src="./images/sec_sal.png" alt="sector salaries" style="zoom: 67%;" />
+<img src="./images/sec_sal.png" alt="sector salaries" width="600" />
 
 - Here are the counts of job roles these industries are looking for, there is a higher demand for Data Analysts in the Finance sector and a bigger demand for Data Scientists in the IT sector.
-<img src="./images/fin_role.png" alt="fin job roles" style="zoom:80%;" />
-<img src="./images/it_role.png" alt="it job roles" style="zoom:80%;" />
+<img src="./images/fin_role.png" alt="fin job roles" width="400" />
+<img src="./images/it_role.png" alt="it job roles" width="400" />
 
 - There was not much of a difference in salaries offered by remote and non-remote jobs.
 
 - London had the highest paying jobs on average and there wasn't much of a difference in average salaries of jobs in the other regions except for the fact that it was lower than in London. Cambridge, Liverpool and Birmingham, Edinburgh, Manchester and Belfast were next in the list. This plot shows us the distribution of salary and also gives an idea of the number of job postings available in London compared to other locations.
-![Loc Sal Count](./images/loc_sal.png)
+<img src="./images/loc_sal.png" alt="Loc_Sal_Count" width="700" />
 
 # Modeling
 
