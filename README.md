@@ -4,6 +4,8 @@ This project aims to analyse the UK Data Science Job market using data from Glas
 
 The data consists of data analyst, data scientist and data engineer roles in the UK from Glassdoor. 
 
+I have made a dashboard for this dataset, using Tableau, which can be found here.
+
 ## Skills Demonstrated
 ### [Data Preprocessing and Cleaning](#data-cleaning)
 - Handling missing data and outliers
@@ -17,6 +19,9 @@ The data consists of data analyst, data scientist and data engineer roles in the
 ### [Machine Learning](#modeling)
 - Building and training linear regression models
 - Interpretting model outputs
+
+### Visualisation
+- Built a dashboard using Tableau
 
 ### Python Programming
 - Writing clean and efficient Python code
